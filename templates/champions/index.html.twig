@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les champions!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2>Champions</h2>
+    <div class="row">
+        {% for champion in champions %}
+            <div class="col mt-3">
+                <div class="card"
+                    style="width: 18rem;">
+                    <img src="{{ champion.coverImage }}"
+                        class="card-img-top"
+                        alt="{{ champion.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ champion.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ champion.ROLE }}</h6>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+
+
+
+        <img src=""
+             alt="">
+    </div>
+
+</div>
+
+
+{% endblock %}
