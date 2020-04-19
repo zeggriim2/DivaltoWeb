@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class AdController extends AbstractController
 {
@@ -34,18 +35,27 @@ class AdController extends AbstractController
      * @Route("/ads/new", name="ads_create")
      * @return response
      */
-    public function create(Request $request, ObjectManager $manager){
+    public function create(Request $request, EntityManagerInterface $manager){
         $ad = new Ad();
 
         $form = $this->createForm(AdType::class, $ad);
 
         $form->handleRequest($request);
+
         // Test si le formulaire a été soumis et a été valide.
         if ($form->isSubmitted() && $form->isValid()){
-
-            
             $manager->persist($ad);
             $manager->flush();
+            
+            $this->addFlash(
+                'success',
+                "L'annonce <strong>{$ad->getTitle()}</strong> a bien été enregistrée."
+            );
+            
+
+            return $this->redirectToRoute('ads_show', [
+                'slug' => $ad->getSlug()
+            ]);
         }
 
         return $this->render('ad/new.html.twig', [
@@ -62,7 +72,6 @@ class AdController extends AbstractController
     public function show( Ad $ad){
         // Je récupere l'annonce qui correspond au slug
         // $ad = $repo->findOneBySlug($slug);
-        dump($ad);
         return $this->render('ad/show.html.twig',[
             'ad' => $ad
         ]);
