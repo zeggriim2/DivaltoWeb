@@ -43,7 +43,7 @@ class Ad
     /**
      * @ORM\Column(type="text")
      */
-    private $content;
+    private $contenu;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -133,14 +133,14 @@ class Ad
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getcontenu(): ?string
     {
-        return $this->content;
+        return $this->contenu;
     }
 
-    public function setContent(string $content): self
+    public function setcontenu(string $contenu): self
     {
-        $this->content = $content;
+        $this->contenu = $contenu;
 
         return $this;
     }
