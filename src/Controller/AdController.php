@@ -16,9 +16,10 @@ class AdController extends AbstractController
 {
     /**
      * Permet d'afficher tout les annonces
-     * 
+     *
      * @Route("/ads", name="ads_index")
-     * @return Response
+     * @param AdRepository $repo
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(AdRepository $repo)
     {
@@ -26,15 +27,14 @@ class AdController extends AbstractController
 
         return $this->render('ad/index.html.twig', [
             'ads' => $ads,
-            
         ]);
     }
 
     /**
-     * permet de creé une annonce
+     * Permet de crée une annonce
      *
      * @Route("/ads/new", name="ads_create")
-     * @return response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function create(Request $request, EntityManagerInterface $manager){
         $ad = new Ad();
@@ -51,6 +51,8 @@ class AdController extends AbstractController
                 $image->setAd($ad);
                 $manager->persist($image);
             }
+
+            $ad->setAuthor($this->getUser());
 
             $manager->persist($ad);
             $manager->flush();
@@ -70,14 +72,16 @@ class AdController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    
 
 
     /**
      * Permet de modifier une annonce
-     * 
+     *
      * @Route("/ads/{slug}/edit", name="ads_edit")
-     * @return response
+     * @param Ad $ad
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
      */
     
     public function edit(Ad $ad, Request $request, EntityManagerInterface $manager){

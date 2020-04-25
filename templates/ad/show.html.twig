@@ -1,76 +1,79 @@
 {% extends 'base.html.twig' %}
 
 
+{# Variable #}
+
+{% set  a = ad.author %}
 {% block title %}
-{{ ad.title }}
+    {{ ad.title }}
 {% endblock %}
 
 {% block body %}
 
-<div class="ad-titles"
-     style="background-image: url({{ad.coverImage}});">
-    <div class="container">
-        <h1>{{ ad.title }}</h1>
-        <p>{{ ad.introduction }}</p>
-        <p class="h2">
-            <strong>{{ ad.rooms }} chambres</strong> pour <strong> {{ ad.price }}&euro;</strong> par nuit
-        </p>
-        <a href="#"
-           class="btn btn-primary">Réserver!</a>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 mb-3">
-            {{ ad.contenu| raw }}
-            <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                  <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-                  <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-                  <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    {% for image in ad.images %}
-                  <div class="carousel-item {% if loop.first %}active{% endif %}">
-                    <img src="{{ image.url }}" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                      <h5>{{ ad.title }}</h5>
-                      <p>{{ image.caption}}</p>
-                    </div>
-                  </div>
-                  {% endfor %}
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </div>              
+    <div class="ad-titles"
+         style="background-image: url({{ ad.coverImage }});">
+        <div class="container">
+            <h1>{{ ad.title }}</h1>
+            <p>{{ ad.introduction }}</p>
+            <p class="h2">
+                <strong>{{ ad.rooms }} chambres</strong> pour <strong> {{ ad.price }}&euro;</strong> par nuit
+            </p>
+            <a href="#"
+               class="btn btn-primary">Réserver!</a>
         </div>
-        <div class="col">
-            <div class="row">
-                <div class="col-4">
-                    <img src="http://placehold.it/64x64"
-                         alt="Avatar de Lilian">
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mb-3">
+                {{ ad.contenu| raw }}
+                <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        {% for image in ad.images %}
+                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                <img src="{{ image.url }}" class="d-block w-100" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>{{ ad.title }}</h5>
+                                    <p>{{ image.caption }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-                <div class="col">
-                    <h3>Lilian D'ORAZIO</h3>
-                    <span class="badge badge-primary">3 annonce</span>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col-3">
+                        {% set urlUser = path('user_show', {'slug': a.slug}) %}
+
+                        <a href="{{ urlUser }}">
+                            <img src="{{ a.picture }}"
+                                 alt="Avatar de {{ a.fullname }}"
+                                 class="avatar avatar-medium">
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ urlUser }}"><h3> {{ a.fullname }} </h3></a>
+                        <span class="badge badge-primary">{{ a.ads | length }} annonces</span>
+                    </div>
+                    {{ a.description | raw }}
                 </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur doloribus distinctio, voluptatem
-                    excepturi sapiente rerum blanditiis quos voluptate aliquid nobis.</p>
-                <p>Praesentium at ratione voluptas nisi dolores provident ex corporis quia omnis sint atque totam,
-                    recusandae optio consequuntur eum tempora dicta!</p>
-                <p>Dolorem neque reprehenderit tenetur voluptate corporis ullam labore provident? Maiores natus quidem
-                    qui tempora error molestiae vel quam modi dolorem!</p>
             </div>
         </div>
     </div>
-</div>
 
 
 {% endblock %}

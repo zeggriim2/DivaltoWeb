@@ -1,0 +1,38 @@
+body {
+    background-color: lightgray;
+}
+
+div.container{
+    margin-top: 20px;
+}
+
+div.ad-titles {
+    padding: 2em;
+    background-size: cover;
+    background-position: center center;
+}
+
+div.ad-titles h1, div.ad-titles p {
+    color:white;
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+div.carousel-caption{
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+.avatar {
+    max-width: 128px;
+    max-height: 128px;
+    border-radius: 50%;
+}
+
+.avatar-medium {
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.avatar-mini{
+    max-width: 24px;
+    max-height: 24px;
+}
