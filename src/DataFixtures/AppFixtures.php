@@ -4,11 +4,11 @@ namespace App\DataFixtures;
 
 
 use App\Entity\Ad;
+use App\Entity\Role;
 use Faker\Factory;
 use App\Entity\User;
 use App\Entity\Image;
 use App\Entity\Champion;
-use Cocur\Slugify\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -28,7 +28,25 @@ class AppFixtures extends Fixture
 		
 		$faker = Factory::create('fr_FR');
 
-		$users = [];
+		// Ajout des roles admin dans la base
+		$adminRole = new Role();
+		$adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+
+        //Création de l'utilisateur admin
+        $adminUser = new User();
+        $adminUser->setFirstName('Lilian')
+                ->setLastName('dorazio')
+                ->setEmail('lilian@symfony.com')
+                ->setHash($this->encoder->encodePassword($adminUser,'password'))
+                ->setPicture('https://avatars.io/twitter/liiorC')
+                ->setIntroduction($faker->sentence())
+                ->setDescription('<p>' . join('</p><p>',$faker->paragraphs(3)) . '</p>')
+                ->addUserRole($adminRole)
+            ;
+        $manager->persist($adminUser);
+
+        $users = [];
 		$genres = ['male', 'female'];
 		
 		//Nous gérons les utilisateurs

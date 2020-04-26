@@ -21,7 +21,6 @@ class HomeController extends AbstractController {
 
         $routeName =  $request->attributes->all();
         $this->generateUrl('homepage', []);
-        dump($routeName);
         return $this->render('base.html.twig');
     }
 } 

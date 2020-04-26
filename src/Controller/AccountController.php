@@ -8,6 +8,7 @@ use App\Form\AccountType;
 use App\Form\PasswordUpdateType;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AccountController extends AbstractController
 {
     /**
-     * Permet d'afficher et gérer le formulaire de connexion
+     *Permet d'afficher et gérer le formulaire de connexion
      *
      * @Route("/login", name="account_login")
      *
@@ -87,6 +88,7 @@ class AccountController extends AbstractController
      * Permet d'afficher et de traiter le formulaire de modificcation de profil
      *
      * @Route("/account/profile", name="account_profile")
+     * @IsGranted("ROLE_USER")
      * 
      * @return Response
      */
@@ -118,6 +120,7 @@ class AccountController extends AbstractController
      * Permet de modifier le mot de passe
      *
      * @Route("/account/password-update", name="account_password")
+     * @IsGranted("ROLE_USER")
      * @param Request $request
      * @param EntityManagerInterface $manager
      * @param UserPasswordEncoderInterface $encoder
@@ -167,6 +170,7 @@ class AccountController extends AbstractController
      * Permet d'afficher le profil de l'utilisateur connecté
      *
      * @Route("/account", name="account_index")
+     * @IsGranted("ROLE_USER")
      */
     public function myAccount(){
         return $this->render("user/index.html.twig",[
