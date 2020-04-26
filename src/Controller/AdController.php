@@ -39,7 +39,7 @@ class AdController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function create(Request $request, EntityManagerInterface $manager){
+    public function create(Request $request, ObjectManager $manager){
         $ad = new Ad();
 
 
@@ -89,7 +89,7 @@ class AdController extends AbstractController
      * @return Response
      */
     
-    public function edit(Ad $ad, Request $request, EntityManagerInterface $manager){
+    public function edit(Ad $ad, Request $request, ObjectManager $manager){
 
         $form = $this->createForm(AdType::class, $ad);
 
@@ -141,16 +141,17 @@ class AdController extends AbstractController
      * Permet de supprimer une annonce
      *
      * @Route("/ads/{slug}/delete", name="ads_delete")
-     * @Security("is_granted('ROLE_USER') and user == ad.getAuthor" , message="Vous navez pas le droit d'accès à cette ressource")
+     * @Security("is_granted('ROLE_USER') and user == ad.getAuthor()" , message="Vous navez pas le droit d'accès à cette ressource")
      * @param Ad $ad
      * @param ObjectManager $manager
      */
-    public function delete(Ad $ad, EntityManagerInterface $manager){
+    public function delete(Ad $ad, ObjectManager $manager){
+
         $manager->remove($ad);
         $manager->flush();
 
         $this->addFlash(
-            'succes',
+            'success',
             "L'annonce <strong>{$ad->getTitle()}</strong> a bien été supprimée !"
         );
 
