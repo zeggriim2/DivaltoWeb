@@ -29,6 +29,7 @@ class AdController extends AbstractController
 
         return $this->render('ad/index.html.twig', [
             'ads' => $ads,
+            
         ]);
     }
 
