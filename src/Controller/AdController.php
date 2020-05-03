@@ -54,17 +54,17 @@ class AdController extends AbstractController
                 $image->setAd($ad);
                 $manager->persist($image);
             }
-
             $ad->setAuthor($this->getUser());
+
 
             $manager->persist($ad);
             $manager->flush();
-            
+
             $this->addFlash(
                 'success',
                 "L'annonce <strong>{$ad->getTitle()}</strong> a bien été enregistrée."
             );
-            
+
 
             return $this->redirectToRoute('ads_show', [
                 'slug' => $ad->getSlug()
@@ -88,7 +88,7 @@ class AdController extends AbstractController
      * @param EntityManagerInterface $manager
      * @return Response
      */
-    
+
     public function edit(Ad $ad, Request $request, ObjectManager $manager){
 
         $form = $this->createForm(AdType::class, $ad);
@@ -103,12 +103,12 @@ class AdController extends AbstractController
 
             $manager->persist($ad);
             $manager->flush();
-            
+
             $this->addFlash(
                 'success',
                 "Les modifications de l'annonce <strong>{$ad->getTitle()}</strong> a bien été enregistrées."
             );
-            
+
 
             return $this->redirectToRoute('ads_show', [
                 'slug' => $ad->getSlug()

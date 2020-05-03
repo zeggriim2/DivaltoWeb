@@ -45,4 +45,8 @@ div.carousel-caption{
     color: firebrick !important;
 }
 
+span.rating i {
+    color: goldenrod;
+}
+
 
